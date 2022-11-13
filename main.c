@@ -56,6 +56,7 @@ void eval_execute_command_loop(int argc, char *argv[], char *env[])
 		while (commandsep[i] != NULL)
 		{
 			convert_to_argv(commandsep[i], commandarray);
+			remove_quotes(commandarray);
 		//	replace_variables(commandarray);
 			if (handle_builtin_commands(commandarray, env) == 1)
 			{
@@ -66,6 +67,37 @@ void eval_execute_command_loop(int argc, char *argv[], char *env[])
 			i++;
 		}
 		free(usercommand);
+	}
+}
+
+void remove_quotes(char *commandarray[])
+{
+	int i;
+
+	for (i = 1; commandarray[i] != NULL; i++)
+	{
+		remove_single_quotes(commandarray[i]);
+	}
+}
+
+void remove_single_quotes(char *str)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] == '\'')
+			delete_char_at_index(str, i);
+	}
+}
+
+
+void delete_char_at_index(char *str, int index)
+{
+	while (str[index] != '\0')
+	{
+		str[index] = str[index + 1];
+		index++;
 	}
 }
 
@@ -232,10 +264,49 @@ int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env
 
 int alias_command (char *commandarray[], char *env[])
 {
-	static alias_t aliases[100] = {NULL};
+	static alias_t aliases[100] = {
+		{"love", "love command"},
+		{"hate", "madara_uchiha"},
+		{NULL, NULL}
+	};
+	int i;
+
+	for (i = 0; commandarray[i] != NULL; i++)
+		;
+
+	if (i == 1)
+		displayaliases(aliases);
+
+	if (i > 1)
+		updatealiases(commandarray, aliases);
+
+}
+
+void displayaliases(alias_t aliases[])
+{
+	int i;
+
+	for (i = 0; aliases[i].command != NULL; i++)
+	{
+		print_to_stdout(aliases[i].command);
+		print_to_stdout("=");
+		print_to_stdout(aliases[i].replacement);
+		print_to_stdout("\n");
+	}
+}
 
 
+void updatealiases(char *commandarray[], alias_t aliases[])
+{
+	int i;
 
+	for (i = 0; commandarray[i] != NULL; i++)
+		printf("%s\n", commandarray[i]);
+
+	for (i = 0; aliases[i].command != NULL; i++)
+	{
+
+	}
 }
 
 int exit_command(char *commandarray[], char *env[])
@@ -513,4 +584,25 @@ int _unsetenv(const char *name)
 		}
 	}
 	return (0);
+}
+
+size_t print_to_fd(int fd, char *string){
+	size_t i;
+
+	for (i = 0; string[i] != '\0'; i++)
+	{
+		write(fd, string + i, 1);
+	}
+	return (i);
+}
+
+
+size_t print_to_stdout(char *string)
+{
+	return (print_to_fd(1, string));
+}
+
+size_t print_to_stderr(char *string)
+{
+	return (print_to_fd(2, string));
 }
