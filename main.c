@@ -114,7 +114,7 @@ void replace_variables(char *commandarray[])
 				case '?':
 					return;
 				case '$':
-					strcpy(commandarray[i], num_to_string(getpid()));
+					_strcpy(commandarray[i], num_to_string(getpid()));
 					return;
 				default:
 					return;
@@ -216,7 +216,7 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 		*str = realloc(*str, num + 1);
 	}
 
-	strcpy(*str, buf);
+	_strcpy(*str, buf);
 	(*str)[num] = '\0';
 	*n = num;
 	return num;
@@ -342,7 +342,7 @@ void updatealiases(char *str, alias_t aliases[])
 	{
 		free(aliases[index].replacement);
 		aliases[index].replacement = malloc(_str_len(cnr[1]) + 1);
-		strcpy(aliases[index].replacement, cnr[1]);
+		_strcpy(aliases[index].replacement, cnr[1]);
 	}
 	else
 	{
@@ -385,7 +385,7 @@ int exit_command(char *commandarray[], char *env[])
 		return (1);
 	}
 	else
-		exit(atoi(commandarray[1]));
+		exit(_atoi(commandarray[1]));
 }
 
 
@@ -527,13 +527,13 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
 	char *fullpath;
 	char *copyofpathvar = malloc(100);
 
-	strcpy(copyofpathvar, pathvar);
+	_strcpy(copyofpathvar, pathvar);
 	path = strtok(copyofpathvar, ":");
 	while(path != NULL){
 		fullpath = malloc(100);
-	strcpy(fullpath, path);
-		strcat(fullpath, "/");
-		strcat(fullpath, progname);
+	_strcpy(fullpath, path);
+		_strcat(fullpath, "/");
+		_strcat(fullpath, progname);
 		if(stat(fullpath, &sfile) != -1)
 			return fullpath;
 		path = strtok(NULL, ":");
@@ -575,12 +575,13 @@ int comp_env_with_val(const char *env, const char *val)
 	int i;
 
 	for (i = 0; ; i++){
-		if(env[i] != val[i]){
+		if(env[i] != val[i])
+		{
 			if (env[i] == '=' && val[i] == '\0')
 				return (0);
 			else
 				return(1);
-			}
+		}
 	}
 }
 
@@ -617,9 +618,9 @@ int _setenv(const char *name, const char *value, int overwrite)
 			{
 				memsize = _str_len(value) + _str_len(name) + 2;
 				environ[i] = malloc(memsize);
-				strcpy(environ[i], name);
-				strcat(environ[i], "=");
-				strcat(environ[i], value);
+				_strcpy(environ[i], name);
+				_strcat(environ[i], "=");
+				_strcat(environ[i], value);
 
 				return (0);
 			}
@@ -677,6 +678,52 @@ size_t print_to_stderr(char *string)
 }
 
 
+
+/**
+ * _atoi -  convert a string to an integer
+ * @s: the sting to convert to integer
+ * Description:  convert a string of numbers to an integer
+ * Return: integer gotten from string
+ */
+int _atoi(char *s)
+{
+	int i, n, sign = 1, no_of_dash = 0;
+
+	/* skip any character that is not a number*/
+	for (i = 0; s[i] < '0' || s[i] > '9'; i++)
+	{
+		if (s[i] == '\0')
+			return (0);
+		if (s[i] == '-')
+			no_of_dash++;
+	}
+
+	sign = (no_of_dash % 2 == 0) ? 1 : -1;
+	for (n = 0; s[i] >= '0' && s[i] <= '9'; i++)
+		n = 10 * n + (s[i] - '0');
+	return (sign * n);
+}
+
+
+/**
+ * _strcpy - copy source string to a destination sting
+ * @dest: string to copy to
+ * @src: string to copy from
+ * Description: copy's the contents of a source string to a destination string
+ * Return: the destination string
+ */
+char *_strcpy(char *dest, char *src)
+{
+	int index;
+	int letter;
+
+	for (index = 0; ((letter = src[index]) != '\0'); index++)
+	{
+		dest[index] = letter;
+	}
+	dest[index] = letter;
+	return (dest);
+}
 
 
 
