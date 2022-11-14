@@ -213,7 +213,7 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 	}
 	else if (num > *n)
 	{
-		*str = realloc(*str, num + 1);
+		*str = _realloc(*str, *n, num + 1);
 	}
 
 	_strcpy(*str, buf);
@@ -712,7 +712,7 @@ int _atoi(char *s)
  * Description: copy's the contents of a source string to a destination string
  * Return: the destination string
  */
-char *_strcpy(char *dest, char *src)
+char *_strcpy(char *dest, const char *src)
 {
 	int index;
 	int letter;
@@ -755,7 +755,7 @@ int _strcmp(char *s1, char *s2)
  * Description: multiplies two digits
  * Return: the result of the multiplication
  */
-char *_strcat(char *dest, char *src)
+char *_strcat(char *dest, const char *src)
 {
 	int i, j;
 
