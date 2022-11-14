@@ -506,11 +506,12 @@ int comp_env_with_val(const char *env, const char *val)
 	int i;
 
 	for (i = 0; ; i++){
-		if(env[i] != val[i])
+		if(env[i] != val[i]){
 			if (env[i] == '=' && val[i] == '\0')
 				return (0);
 			else
 				return(1);
+			}
 	}
 }
 
