@@ -47,6 +47,9 @@ int comp_env_with_val(const char *env, const char *val);
 char *_getenv(const char *name);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
+size_t print_to_fd(int fd, char *string);
+size_t print_to_stdout(char *string);
+size_t print_to_stderr(char *string);
 
 
 
@@ -54,4 +57,11 @@ int exit_command(char **, char **);
 int env_command(char **, char **);
 int cd_command(char **, char **);
 int alias_command(char **, char **);
+
+void displayaliases(alias_t aliases[]);
+void updatealiases(char *commandarray[], alias_t aliases[]);
+
+void remove_quotes(char *commandarray[]);
+void remove_single_quotes(char *str);
+void delete_char_at_index(char *str, int index);
 #endif
