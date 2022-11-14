@@ -145,7 +145,7 @@ void tokenize_string (char *command, char *commandarray[], char sep)
 	int count_ca = 0;
 	int pass_space = 1;
 
-	for (i = 0; command[i] != '\0'; i++)
+	for (i = 0; command[i] != '\0' && commandarray[count_ca] != NULL; i++)
 	{
 		if (pass_space == 1 && command[i] != sep)
 		{
@@ -278,8 +278,38 @@ int alias_command (char *commandarray[], char *env[])
 		displayaliases(aliases);
 
 	if (i > 1)
-		updatealiases(commandarray, aliases);
+		display_or_update_aliases(commandarray, aliases);
 
+}
+
+void display_or_update_aliases(char *commandarray[], alias_t aliases[])
+{
+	int i;
+
+	for (i = 1; commandarray[i] != NULL; i++)
+	{
+		if(does_str_contain(commandarray[i], '='))
+		{
+			updatealiases(commandarray[i], aliases);
+		}
+		else
+		{
+			//display this alias
+		}
+	}
+}
+
+int does_str_contain(char *str, char letter)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] == letter)
+			return (1);
+	}
+
+	return (0);
 }
 
 void displayaliases(alias_t aliases[])
@@ -296,18 +326,57 @@ void displayaliases(alias_t aliases[])
 }
 
 
-void updatealiases(char *commandarray[], alias_t aliases[])
+void updatealiases(char *str, alias_t aliases[])
+{
+	int i;
+	int index;
+	char *cnr[3];
+	alias_t newalias;
+
+	cnr[2] = NULL;
+
+	tokenize_string(str, cnr, '=');
+
+	index = get_alias_index(aliases, cnr[0]);
+
+	if (index >=0)
+	{
+		free(aliases[index].replacement);
+		aliases[index].replacement = malloc(_str_len(cnr[1]) + 1);
+		strcpy(aliases[index].replacement, cnr[1]);
+	}
+	else
+	{
+		newalias.command = malloc(_str_len(cnr[0]) + 1);
+		newalias.replacement = malloc(_str_len(cnr[1]) + 1);
+
+		for (i = 0; aliases[i].command != NULL; i++)
+			;
+
+		aliases[i + 1] = aliases[i];
+		aliases[i] = newalias;
+
+
+	}
+
+}
+
+//return alias index in success
+//return -1 on failure
+int get_alias_index(alias_t aliases[], char *name)
 {
 	int i;
 
-	for (i = 0; commandarray[i] != NULL; i++)
-		printf("%s\n", commandarray[i]);
-
 	for (i = 0; aliases[i].command != NULL; i++)
 	{
-
+		if (strcmp(aliases[i].command, name) == 0)
+			return (i);
 	}
+
+	return (-1);
 }
+
+
 
 int exit_command(char *commandarray[], char *env[])
 {
@@ -606,3 +675,9 @@ size_t print_to_stderr(char *string)
 {
 	return (print_to_fd(2, string));
 }
+
+
+
+
+
+

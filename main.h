@@ -59,9 +59,12 @@ int cd_command(char **, char **);
 int alias_command(char **, char **);
 
 void displayaliases(alias_t aliases[]);
-void updatealiases(char *commandarray[], alias_t aliases[]);
+void updatealiases(char *str, alias_t aliases[]);
 
 void remove_quotes(char *commandarray[]);
 void remove_single_quotes(char *str);
 void delete_char_at_index(char *str, int index);
+int does_str_contain(char *, char);
+void display_or_update_aliases(char *commandarray[], alias_t aliases[]);
+int get_alias_index(alias_t aliases[], char *name);
 #endif
