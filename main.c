@@ -254,7 +254,7 @@ int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env
 
 	for (i = 0; array[i].command_name != NULL; i++ )
 	{
-		if (strcmp(array[i].command_name, commandarray[0]) == 0)
+		if (_strcmp(array[i].command_name, commandarray[0]) == 0)
 			return (array[i].func);
 	}
 
@@ -368,7 +368,7 @@ int get_alias_index(alias_t aliases[], char *name)
 
 	for (i = 0; aliases[i].command != NULL; i++)
 	{
-		if (strcmp(aliases[i].command, name) == 0)
+		if (_strcmp(aliases[i].command, name) == 0)
 			return (i);
 	}
 
@@ -436,7 +436,7 @@ int cd_command(char *commandarray[], char *env[])
 		}
 		return (1);
 	}
-	else if (strcmp(commandarray[1], "-") == 0)
+	else if (_strcmp(commandarray[1], "-") == 0)
 	{
 		_CWD = _getenv("OLDPWD");
 		if (chdir(_CWD) == 0)
@@ -727,4 +727,94 @@ char *_strcpy(char *dest, char *src)
 
 
 
+/**
+ * _strcmp - multiplies two digits
+ * @s1: 1st digit in the multiplication
+ * @s2: 1st digit in the multiplication
+ * Description: multiplies two digits
+ * Return: the result of the multiplication
+ */
+int _strcmp(char *s1, char *s2)
+{
+	int i = 0;
 
+	while (1)
+	{
+		if (s1[i] != s2[i] || s1[i] == '\0' || s2[i] == '\0')
+			return (s1[i] - s2[i]);
+		i++;
+	}
+}
+
+
+
+/**
+ * _strcat - multiplies two digits
+ * @src: 1st digit in the multiplication
+ * @dest: 2nd digit to be multiplied
+ * Description: multiplies two digits
+ * Return: the result of the multiplication
+ */
+char *_strcat(char *dest, char *src)
+{
+	int i, j;
+
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0') /* find end of dest */
+		i++;
+	while ((dest[i++] = src[j++]) != '\0') /* copy src */
+		;
+	return (dest);
+}
+
+
+
+
+
+/**
+ * _realloc - multiplies two digits
+ * @ptr: 1st digit in the multiplication
+ * @old_size: 1st digit in the multiplication
+ * @new_size: 1st digit in the multiplication
+ * Description: multiplies two digits
+ * Return: the result of the multiplication
+ */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	unsigned int i;
+	char *new_ptr;
+	char *ptr2 = ptr;
+
+	if (ptr == NULL)
+	{
+		new_ptr = (malloc(new_size));
+		if (new_ptr == NULL)
+			return (NULL);
+		return (new_ptr);
+	}
+
+	if (new_size == 0)
+	{
+		if (ptr != NULL)
+			free(ptr);
+		ptr = NULL;
+		return (NULL);
+	}
+	if (new_size == old_size)
+		return (ptr);
+
+	new_ptr = (char *)malloc(new_size);
+	if (new_ptr == NULL)
+		return (NULL);
+
+	/*copy from old_size to new_size*/
+	for (i = 0; i < new_size && i < old_size; i++)
+	{
+		new_ptr[i] = ptr2[i];
+	}
+	free(ptr);
+	ptr = NULL;
+	ptr2 = NULL;
+	return (new_ptr);
+}
