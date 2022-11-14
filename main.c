@@ -12,7 +12,7 @@ void executeshell(int argc, char *argv[], char *env[])
 {
 	shell_startup_script();
 	eval_execute_command_loop(argc, argv, env);
-	
+
 }
 
 
@@ -43,7 +43,7 @@ void eval_execute_command_loop(int argc, char *argv[], char *env[])
 	char *commandarray[10];
 	char *commandsep[10];
 	int i;
-	
+
 	while(1)
 	{
 		displaycwd();
@@ -56,8 +56,7 @@ void eval_execute_command_loop(int argc, char *argv[], char *env[])
 		while (commandsep[i] != NULL)
 		{
 			convert_to_argv(commandsep[i], commandarray);
-			remove_quotes(commandarray);
-		//	replace_variables(commandarray);
+			/*replace_variables(commandarray);*/
 			if (handle_builtin_commands(commandarray, env) == 1)
 			{
 				i++;
@@ -216,7 +215,7 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 	{
 		*str = realloc(*str, num + 1);
 	}
-	
+
 	strcpy(*str, buf);
 	(*str)[num] = '\0';
 	*n = num;
@@ -576,11 +575,12 @@ int comp_env_with_val(const char *env, const char *val)
 	int i;
 
 	for (i = 0; ; i++){
-		if(env[i] != val[i])
+		if(env[i] != val[i]){
 			if (env[i] == '=' && val[i] == '\0')
 				return (0);
 			else
 				return(1);
+			}
 	}
 }
 
