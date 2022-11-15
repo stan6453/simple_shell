@@ -185,6 +185,13 @@ void removecomment(char *str)
 }
 
 
+
+/**
+ * tokenize_string - breakes a string at @sep character and store them in an array
+ * @command: sting to breakdown
+ * @commandarray: array to store each piece of string
+ * @sep: character boundry to break string from
+ */
 void tokenize_string (char *command, char *commandarray[], char sep)
 {
 	int i;
@@ -211,7 +218,10 @@ void tokenize_string (char *command, char *commandarray[], char sep)
 }
 
 
-
+/**
+ * displaycwd - prints the current working directory
+ * (which happens to be the proompt) to stdout
+ */
 void displaycwd(void)
 {
 	char CWD[256];
@@ -221,7 +231,9 @@ void displaycwd(void)
 
 
 
-
+/**
+ * getusercommand - gets user command input
+ */
 char *getusercommand(void)
 {
 	char *buf = NULL;
@@ -242,7 +254,12 @@ char *getusercommand(void)
 
 }
 
-
+/**
+ * _getline - gets a line of text from the user
+ * @str: a double pointer to the string that will hold the line read
+ * @n: size of the memory space to hold the line read
+ * @stream: file stream to read input from
+ */
 size_t _getline(char **str, size_t *n, FILE *stream)
 {
 	char buf[1024];
@@ -262,7 +279,8 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 	{
 		*str = _realloc(*str, *n, num + 1);
 	}
-
+	
+	/*might need to free previous value stord in *str*/
 	_strcpy(*str, buf);
 	(*str)[num] = '\0';
 	*n = num;
@@ -271,7 +289,12 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 
 
 
-
+/**
+ * handle_builtin_commands - multiplies two digits
+ * @commandarray: array containing the name of the command and its options
+ * @env: environment variables
+ * Return: 1 if a built in command was executed, else return 0
+ */
 int handle_builtin_commands(char *commandarray[], char *env[])
 {
 	int (*func)(char **, char **);
