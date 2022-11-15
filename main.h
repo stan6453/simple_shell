@@ -42,6 +42,11 @@ void printarr(char *arr[]);
 char *resolve_path(char *, char *, char *);
 int isonlydigit(char *);
 int _str_len(const char *str);
+int _atoi(char *s);
+char *_strcpy(char *dest, const char *src);
+int _strcmp(char *s1, char *s2);
+char *_strcat(char *dest, const char *src);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_getrnv(const char *name);
 int comp_env_with_val(const char *env, const char *val);
 char *_getenv(const char *name);
@@ -59,9 +64,14 @@ int cd_command(char **, char **);
 int alias_command(char **, char **);
 
 void displayaliases(alias_t aliases[]);
-void updatealiases(char *commandarray[], alias_t aliases[]);
+void updatealiases(char *str, alias_t aliases[]);
 
 void remove_quotes(char *commandarray[]);
 void remove_single_quotes(char *str);
 void delete_char_at_index(char *str, int index);
+int does_str_contain(char *, char);
+void display_or_update_aliases(char *commandarray[], alias_t aliases[]);
+int get_alias_index(alias_t aliases[], char *name);
+
+
 #endif

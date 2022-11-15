@@ -134,7 +134,7 @@ void replace_variables(char *commandarray[])
 				case '?':
 					return;
 				case '$':
-					strcpy(commandarray[i], num_to_string(getpid()));
+					_strcpy(commandarray[i], num_to_string(getpid()));
 					return;
 				default:
 					return;
@@ -164,7 +164,7 @@ void tokenize_string (char *command, char *commandarray[], char sep)
 	int count_ca = 0;
 	int pass_space = 1;
 
-	for (i = 0; command[i] != '\0'; i++)
+	for (i = 0; command[i] != '\0' && commandarray[count_ca] != NULL; i++)
 	{
 		if (pass_space == 1 && command[i] != sep)
 		{
@@ -233,10 +233,10 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 	}
 	else if (num > *n)
 	{
-		*str = realloc(*str, num + 1);
+		*str = _realloc(*str, *n, num + 1);
 	}
 
-	strcpy(*str, buf);
+	_strcpy(*str, buf);
 	(*str)[num] = '\0';
 	*n = num;
 	return num;
@@ -274,7 +274,7 @@ int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env
 
 	for (i = 0; array[i].command_name != NULL; i++ )
 	{
-		if (strcmp(array[i].command_name, commandarray[0]) == 0)
+		if (_strcmp(array[i].command_name, commandarray[0]) == 0)
 			return (array[i].func);
 	}
 
@@ -297,8 +297,38 @@ int alias_command (char *commandarray[], char *env[])
 		displayaliases(aliases);
 
 	if (i > 1)
-		updatealiases(commandarray, aliases);
+		display_or_update_aliases(commandarray, aliases);
 
+}
+
+void display_or_update_aliases(char *commandarray[], alias_t aliases[])
+{
+	int i;
+
+	for (i = 1; commandarray[i] != NULL; i++)
+	{
+		if(does_str_contain(commandarray[i], '='))
+		{
+			updatealiases(commandarray[i], aliases);
+		}
+		else
+		{
+			//display this alias
+		}
+	}
+}
+
+int does_str_contain(char *str, char letter)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] == letter)
+			return (1);
+	}
+
+	return (0);
 }
 
 void displayaliases(alias_t aliases[])
@@ -315,18 +345,57 @@ void displayaliases(alias_t aliases[])
 }
 
 
-void updatealiases(char *commandarray[], alias_t aliases[])
+void updatealiases(char *str, alias_t aliases[])
+{
+	int i;
+	int index;
+	char *cnr[3];
+	alias_t newalias;
+
+	cnr[2] = NULL;
+
+	tokenize_string(str, cnr, '=');
+
+	index = get_alias_index(aliases, cnr[0]);
+
+	if (index >=0)
+	{
+		free(aliases[index].replacement);
+		aliases[index].replacement = malloc(_str_len(cnr[1]) + 1);
+		_strcpy(aliases[index].replacement, cnr[1]);
+	}
+	else
+	{
+		newalias.command = malloc(_str_len(cnr[0]) + 1);
+		newalias.replacement = malloc(_str_len(cnr[1]) + 1);
+
+		for (i = 0; aliases[i].command != NULL; i++)
+			;
+
+		aliases[i + 1] = aliases[i];
+		aliases[i] = newalias;
+
+
+	}
+
+}
+
+//return alias index in success
+//return -1 on failure
+int get_alias_index(alias_t aliases[], char *name)
 {
 	int i;
 
-	for (i = 0; commandarray[i] != NULL; i++)
-		printf("%s\n", commandarray[i]);
-
 	for (i = 0; aliases[i].command != NULL; i++)
 	{
-
+		if (_strcmp(aliases[i].command, name) == 0)
+			return (i);
 	}
+
+	return (-1);
 }
+
+
 
 int exit_command(char *commandarray[], char *env[])
 {
@@ -336,7 +405,7 @@ int exit_command(char *commandarray[], char *env[])
 		return (1);
 	}
 	else
-		exit(atoi(commandarray[1]));
+		exit(_atoi(commandarray[1]));
 }
 
 
@@ -387,7 +456,7 @@ int cd_command(char *commandarray[], char *env[])
 		}
 		return (1);
 	}
-	else if (strcmp(commandarray[1], "-") == 0)
+	else if (_strcmp(commandarray[1], "-") == 0)
 	{
 		_CWD = _getenv("OLDPWD");
 		if (chdir(_CWD) == 0)
@@ -478,13 +547,13 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
 	char *fullpath;
 	char *copyofpathvar = malloc(100);
 
-	strcpy(copyofpathvar, pathvar);
+	_strcpy(copyofpathvar, pathvar);
 	path = strtok(copyofpathvar, ":");
 	while(path != NULL){
 		fullpath = malloc(100);
-	strcpy(fullpath, path);
-		strcat(fullpath, "/");
-		strcat(fullpath, progname);
+	_strcpy(fullpath, path);
+		_strcat(fullpath, "/");
+		_strcat(fullpath, progname);
 		if(stat(fullpath, &sfile) != -1)
 			return fullpath;
 		path = strtok(NULL, ":");
@@ -526,12 +595,13 @@ int comp_env_with_val(const char *env, const char *val)
 	int i;
 
 	for (i = 0; ; i++){
-		if(env[i] != val[i]){
+		if(env[i] != val[i])
+		{
 			if (env[i] == '=' && val[i] == '\0')
 				return (0);
 			else
 				return(1);
-			}
+		}
 	}
 }
 
@@ -568,9 +638,9 @@ int _setenv(const char *name, const char *value, int overwrite)
 			{
 				memsize = _str_len(value) + _str_len(name) + 2;
 				environ[i] = malloc(memsize);
-				strcpy(environ[i], name);
-				strcat(environ[i], "=");
-				strcat(environ[i], value);
+				_strcpy(environ[i], name);
+				_strcat(environ[i], "=");
+				_strcat(environ[i], value);
 
 				return (0);
 			}
@@ -625,4 +695,146 @@ size_t print_to_stdout(char *string)
 size_t print_to_stderr(char *string)
 {
 	return (print_to_fd(2, string));
+}
+
+
+
+/**
+ * _atoi -  convert a string to an integer
+ * @s: the sting to convert to integer
+ * Description:  convert a string of numbers to an integer
+ * Return: integer gotten from string
+ */
+int _atoi(char *s)
+{
+	int i, n, sign = 1, no_of_dash = 0;
+
+	/* skip any character that is not a number*/
+	for (i = 0; s[i] < '0' || s[i] > '9'; i++)
+	{
+		if (s[i] == '\0')
+			return (0);
+		if (s[i] == '-')
+			no_of_dash++;
+	}
+
+	sign = (no_of_dash % 2 == 0) ? 1 : -1;
+	for (n = 0; s[i] >= '0' && s[i] <= '9'; i++)
+		n = 10 * n + (s[i] - '0');
+	return (sign * n);
+}
+
+
+/**
+ * _strcpy - copy source string to a destination sting
+ * @dest: string to copy to
+ * @src: string to copy from
+ * Description: copy's the contents of a source string to a destination string
+ * Return: the destination string
+ */
+char *_strcpy(char *dest, const char *src)
+{
+	int index;
+	int letter;
+
+	for (index = 0; ((letter = src[index]) != '\0'); index++)
+	{
+		dest[index] = letter;
+	}
+	dest[index] = letter;
+	return (dest);
+}
+
+
+
+/**
+ * _strcmp - multiplies two digits
+ * @s1: 1st digit in the multiplication
+ * @s2: 1st digit in the multiplication
+ * Description: multiplies two digits
+ * Return: the result of the multiplication
+ */
+int _strcmp(char *s1, char *s2)
+{
+	int i = 0;
+
+	while (1)
+	{
+		if (s1[i] != s2[i] || s1[i] == '\0' || s2[i] == '\0')
+			return (s1[i] - s2[i]);
+		i++;
+	}
+}
+
+
+
+/**
+ * _strcat - multiplies two digits
+ * @src: 1st digit in the multiplication
+ * @dest: 2nd digit to be multiplied
+ * Description: multiplies two digits
+ * Return: the result of the multiplication
+ */
+char *_strcat(char *dest, const char *src)
+{
+	int i, j;
+
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0') /* find end of dest */
+		i++;
+	while ((dest[i++] = src[j++]) != '\0') /* copy src */
+		;
+	return (dest);
+}
+
+
+
+
+
+/**
+ * _realloc - multiplies two digits
+ * @ptr: 1st digit in the multiplication
+ * @old_size: 1st digit in the multiplication
+ * @new_size: 1st digit in the multiplication
+ * Description: multiplies two digits
+ * Return: the result of the multiplication
+ */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	unsigned int i;
+	char *new_ptr;
+	char *ptr2 = ptr;
+
+	if (ptr == NULL)
+	{
+		new_ptr = (malloc(new_size));
+		if (new_ptr == NULL)
+			return (NULL);
+		return (new_ptr);
+	}
+
+	if (new_size == 0)
+	{
+		if (ptr != NULL)
+			free(ptr);
+		ptr = NULL;
+		return (NULL);
+	}
+	if (new_size == old_size)
+		return (ptr);
+
+	new_ptr = (char *)malloc(new_size);
+	if (new_ptr == NULL)
+		return (NULL);
+
+	/*copy from old_size to new_size*/
+	for (i = 0; i < new_size && i < old_size; i++)
+	{
+		new_ptr[i] = ptr2[i];
+	}
+	free(ptr);
+	ptr = NULL;
+	ptr2 = NULL;
+	return (new_ptr);
 }
