@@ -55,15 +55,6 @@ void display_welcome_art(void)
 }
 
 /**
- * eval_execute_command_loop - evaluates commands passed by user
- * and loops through to execute
- * @argc: argument count
- * @argv: array of argument variables
- * @env: environment variables
- * Return: void
- */
-
-/**
  * eval_execute_command_loop - continuously asks user for command and executes it
  * @argc: argument count when shell was opened
  * @argv: arguments passed to shell when it was opened
