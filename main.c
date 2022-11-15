@@ -367,6 +367,14 @@ int alias_command (char *commandarray[], char *env[])
 
 }
 
+
+/**
+ * display_or_update_aliases - moves through the options for the alias and decides whether
+ * each option is for isplaying or updating an alias
+ * @commandarray: array containing the name of the command and its options
+ * @aliases: array of alias structures
+ */
+
 void display_or_update_aliases(char *commandarray[], alias_t aliases[])
 {
 	int i;
@@ -384,6 +392,13 @@ void display_or_update_aliases(char *commandarray[], alias_t aliases[])
 	}
 }
 
+
+/**
+ * does_str_contain - check if a string contains at least 1 occurence of a character
+ * @str: string to check its content
+ * @letter: character to look for in the string
+ * Return: 1 if the character is found, 0 otherwise
+ */
 int does_str_contain(char *str, char letter)
 {
 	int i;
@@ -393,10 +408,15 @@ int does_str_contain(char *str, char letter)
 		if (str[i] == letter)
 			return (1);
 	}
-
 	return (0);
 }
 
+
+/**
+ * displayaliases - display all aliases from an array of alias_t structure
+ * @aliases: array of alias_t structure
+ * Return: a function of the form: int function_name(char *commandarray[], char *env[])
+ */
 void displayaliases(alias_t aliases[])
 {
 	int i;
@@ -411,10 +431,13 @@ void displayaliases(alias_t aliases[])
 }
 
 
+
+
 void updatealiases(char *str, alias_t aliases[])
 {
 	int i;
 	int index;
+	/*command and replacement*/
 	char *cnr[3];
 	alias_t newalias;
 
@@ -440,8 +463,6 @@ void updatealiases(char *str, alias_t aliases[])
 
 		aliases[i + 1] = aliases[i];
 		aliases[i] = newalias;
-
-
 	}
 
 }
