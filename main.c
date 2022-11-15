@@ -431,7 +431,11 @@ void displayaliases(alias_t aliases[])
 }
 
 
-
+/**
+ * updatealiases - change alias text if it exist or push a new alias_t structure to array
+ * @str: string in the form "alias_name=alias_value"
+ * @aliases: array of alias_t structure
+ */
 
 void updatealiases(char *str, alias_t aliases[])
 {
@@ -467,8 +471,16 @@ void updatealiases(char *str, alias_t aliases[])
 
 }
 
-//return alias index in success
-//return -1 on failure
+
+
+/**
+ * get_alias_index - get the index of an alias_t struct in the aliases array based on its name
+ * @aliases: array of alias_t structure
+ * @name: name to return index of
+ * Return: alias index on success
+ *         -1 on failure
+ */
+
 int get_alias_index(alias_t aliases[], char *name)
 {
 	int i;
@@ -583,6 +595,16 @@ int cd_command(char *commandarray[], char *env[])
 }
 
 
+
+/**
+ * execute_user_command - forks a process and execute command
+ * on the child process using execve
+ * @myprog: name of my shell
+ * @myargv: synthetic commandarray for the program to run 
+ * @env: environment variables
+ */
+
+
 void execute_user_command(char *myprog, char *myargv[], char *env[])
 {
 	struct stat sfile;
@@ -603,6 +625,13 @@ void execute_user_command(char *myprog, char *myargv[], char *env[])
 }
 
 
+
+/**
+ * convert_to_argv - takes a command string at tokenizes it,
+ * storing each text delimited by space in commandarray
+ * @command: string to get commandarray from
+ * @commandarray: array of char pointers to text in command, separated by space character
+ */
 
 void convert_to_argv(char *command, char *commandarray[])
 {
@@ -636,15 +665,12 @@ void convert_to_argv(char *command, char *commandarray[])
 }
 
 
-void printarr(char *arr[])
-{
-	while (*arr != NULL)
-	{
-		printf("%s\n", *arr);
-		arr++;
-	}
-}
-
+/**
+ * resolve_path - return the absolute path where a command can be found
+ * @myprog: name of my shell
+ * @progname: name of the command to execute
+ * @pathvar: a pointer to the path environment variable
+ */
 
 char *resolve_path(char *myprog, char *progname, char *pathvar)
 {
@@ -693,8 +719,12 @@ int _str_len(const char *str)
 	return (i);
 }
 
-
-
+/**
+ * comp_env_with_val - check if val matches the name of an environment variable
+ * @env: string in the form "name=value"
+ * @val: this string is compared with name from the string "name=valuee"
+ * Return: 0 is the strings match, 1 if they don't
+ */
 
 int comp_env_with_val(const char *env, const char *val)
 {
@@ -712,6 +742,13 @@ int comp_env_with_val(const char *env, const char *val)
 }
 
 
+
+/**
+ * _getenv - return a pointer to the value of an environment variable
+ * @name: name of the environment variable to search for its value
+ * Return: pointer to the value of an environment variable searched
+ *         NULL if not found
+ */
 char *_getenv(const char *name)
 {
 	extern char **environ;
@@ -724,11 +761,19 @@ char *_getenv(const char *name)
 			return (environ[i] + _str_len(name) + 1);
 		}
 	}
-
+	return (NULL);
 }
 
 
 
+/**
+ * _setenv - set the value of an environment variable
+ * @name: name of env variable to set the value
+ * @value: value to be set
+ * @overwrite: if set to true, environment variable is overwritten if it exists
+ * if set to false, the environment variable is not changed if it already exists
+ * Return: 0 on success, -1 on failure (with errno set(not implemented yet))
+ */
 
 int _setenv(const char *name, const char *value, int overwrite)
 {
@@ -747,8 +792,6 @@ int _setenv(const char *name, const char *value, int overwrite)
 				_strcpy(environ[i], name);
 				_strcat(environ[i], "=");
 				_strcat(environ[i], value);
-
-				return (0);
 			}
 			return (0);
 		}
