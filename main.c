@@ -144,7 +144,7 @@ void tokenize_string (char *command, char *commandarray[], char sep)
 	int count_ca = 0;
 	int pass_space = 1;
 
-	for (i = 0; command[i] != '\0' && commandarray[count_ca] != NULL; i++)
+	for (i = 0; command[i] != '\0'; i++)
 	{
 		if (pass_space == 1 && command[i] != sep)
 		{
@@ -531,7 +531,7 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
 	path = strtok(copyofpathvar, ":");
 	while(path != NULL){
 		fullpath = malloc(100);
-	_strcpy(fullpath, path);
+		_strcpy(fullpath, path);
 		_strcat(fullpath, "/");
 		_strcat(fullpath, progname);
 		if(stat(fullpath, &sfile) != -1)
