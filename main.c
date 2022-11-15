@@ -56,7 +56,12 @@ void display_welcome_art(void)
 }
 
 
-
+/**
+ * eval_execute_command_loop - continuously asks user for command and executes it 
+ * @argc: argument count when shell was opened
+ * @argv: arguments passed to shell when it was opened
+ * @env: environment variables of shell
+ */
 void eval_execute_command_loop(int argc, char *argv[], char *env[])
 {
 	char *usercommand;
@@ -89,6 +94,11 @@ void eval_execute_command_loop(int argc, char *argv[], char *env[])
 	}
 }
 
+
+/**
+ * remove_quotes - used to remove all quotes from the options of the shell command
+ * @commandarray: array of string pointers to remove quote from
+ */
 void remove_quotes(char *commandarray[])
 {
 	int i;
@@ -99,6 +109,12 @@ void remove_quotes(char *commandarray[])
 	}
 }
 
+
+
+/**
+ * remove_single_quotes - removes all single quote character in a string
+ * @str: the sring to remove single quotes from
+ */
 void remove_single_quotes(char *str)
 {
 	int i;
@@ -111,6 +127,11 @@ void remove_single_quotes(char *str)
 }
 
 
+/**
+ * delete_char_at_index - delete a character from a particular index in a string
+ * @str: string to delete character from
+ * @index: position of the character to remove
+ */
 void delete_char_at_index(char *str, int index)
 {
 	while (str[index] != '\0')
@@ -145,6 +166,12 @@ void replace_variables(char *commandarray[])
 
 */
 
+
+/**
+ * removecomment - remove singlre line comment (#) from the command
+ * @str: string to remove comment from
+ * @index: position of the character to remove
+ */
 void removecomment(char *str)
 {
 	int i;
