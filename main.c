@@ -290,7 +290,7 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 
 
 /**
- * handle_builtin_commands - multiplies two digits
+ * handle_builtin_commands - retrieves a built in command and executes it
  * @commandarray: array containing the name of the command and its options
  * @env: environment variables
  * Return: 1 if a built in command was executed, else return 0
@@ -304,11 +304,18 @@ int handle_builtin_commands(char *commandarray[], char *env[])
 		func(commandarray, env);
 		return (1);
 	}
-
 	return (0);
 }
 
 
+
+
+/**
+ * get_func_to_execute - returns a pointer to a function of the form:
+ *     int function_name(char *commandarray[], char *env[])
+ * @commandarray: array containing the name of the command and its options
+ * Return: a function of the form: int function_name(char *commandarray[], char *env[])
+ */
 int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env[])
 {
 	int i;
@@ -331,6 +338,15 @@ int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env
 	return (NULL);
 }
 
+
+
+
+/**
+ * alias_command - fn that runs when the alias comamnd is executed
+ * @commandarray: array containing the name of the command and its options
+ * @env: environment variables
+ * Return: honestly, this fn doesnt really need to return anything (my bad)
+ */
 int alias_command (char *commandarray[], char *env[])
 {
 	static alias_t aliases[100] = {
@@ -446,7 +462,12 @@ int get_alias_index(alias_t aliases[], char *name)
 }
 
 
-
+/**
+ * alias_command - fn that runs when the exit comamnd is executed
+ * @commandarray: array containing the name of the command and its options
+ * @env: environment variables
+ * Return: honestly, this fn doesnt really need to return anything (my bad)
+ */
 int exit_command(char *commandarray[], char *env[])
 {
 	if (!isonlydigit(commandarray[1]))
@@ -478,6 +499,13 @@ int isonlydigit(char *s)
 }
 
 
+
+/**
+ * alias_command - fn that runs when the env comamnd is executed
+ * @commandarray: array containing the name of the command and its options
+ * @env: environment variables
+ * Return: honestly, this fn doesnt really need to return anything (my bad)
+ */
 int env_command(char *commandarray[], char *env[])
 {
 	int i = 0;
@@ -490,6 +518,13 @@ int env_command(char *commandarray[], char *env[])
 	return (1);
 }
 
+
+/**
+ * alias_command - fn that runs when the cd comamnd is executed
+ * @commandarray: array containing the name of the command and its options
+ * @env: environment variables
+ * Return: honestly, this fn doesnt really need to return anything (my bad)
+ */
 int cd_command(char *commandarray[], char *env[])
 {
 	char CWD[256];
