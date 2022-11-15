@@ -4,7 +4,7 @@
  * @argc: argument count
  * @argv: array of argument variables
  * @env: environment variables
- * return: Always 0;
+ * Return: Always 0;
  */
 int main(int argc, char *argv[], char *env[])
 {
@@ -13,12 +13,11 @@ int main(int argc, char *argv[], char *env[])
 }
 
 /**
- * executeshell - receives commands passed to the shell
- * and executes them
+ * executeshell - activates command execution loop
  * @argc: argument count
  * @argv: array of argument variables
  * @env: environment variables
- * return: void;
+ * Return: void;
  */
 
 void executeshell(int argc, char *argv[], char *env[])
@@ -30,7 +29,7 @@ void executeshell(int argc, char *argv[], char *env[])
 
 /**
  * shell_startup_script - displays welcome message to screen
- * return: void;
+ * Return: void;
  */
 void shell_startup_script(void)
 {
@@ -41,7 +40,7 @@ void shell_startup_script(void)
 /**
  * display_welcome_art - reads welcome art from art.txt
  * and displays to screen
- * return: void;
+ * Return: void;
  */
 
 void display_welcome_art(void)
@@ -55,7 +54,14 @@ void display_welcome_art(void)
 	printf("\n");
 }
 
-
+/**
+ * eval_execute_command_loop - evaluates commands passed by user
+ * and loops through to execute
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * Return: void
+ */
 
 void eval_execute_command_loop(int argc, char *argv[], char *env[])
 {
@@ -88,7 +94,11 @@ void eval_execute_command_loop(int argc, char *argv[], char *env[])
 		free(usercommand);
 	}
 }
-
+/**
+ * remove_quotes - removes quotes
+ * @commandarray: array of commands
+ * Return: void
+ */
 void remove_quotes(char *commandarray[])
 {
 	int i;
@@ -98,7 +108,11 @@ void remove_quotes(char *commandarray[])
 		remove_single_quotes(commandarray[i]);
 	}
 }
-
+/**
+ * remove_single_quotes - removes single quotes
+ * @str: string argument
+ * Return: void
+ */
 void remove_single_quotes(char *str)
 {
 	int i;
@@ -110,7 +124,13 @@ void remove_single_quotes(char *str)
 	}
 }
 
-
+/**
+ * delete_char_at_index - delete character at given index
+ * in string
+ * @str: string argument
+ * @index: index to be deleted from string
+ * Return: void
+ */
 void delete_char_at_index(char *str, int index)
 {
 	while (str[index] != '\0')
@@ -144,7 +164,11 @@ void replace_variables(char *commandarray[])
 }
 
 */
-
+/**
+ * removecomment - removes comments
+ * @str: string argument
+ * Return: void
+ */
 void removecomment(char *str)
 {
 	int i;
@@ -157,7 +181,13 @@ void removecomment(char *str)
 		}
 }
 
-
+/**
+ * tokenize_string - tokenizes the string
+ * @command: command
+ * @commandarray: array of commands
+ * @sep: seperator
+ * Return: void
+ */
 void tokenize_string (char *command, char *commandarray[], char sep)
 {
 	int i;
@@ -183,8 +213,10 @@ void tokenize_string (char *command, char *commandarray[], char sep)
 	commandarray[count_ca] = NULL;
 }
 
-
-
+/**
+ * displaycwd - display current working directory
+ * Return: void
+ */
 void displaycwd(void)
 {
 	char CWD[256];
@@ -193,8 +225,10 @@ void displaycwd(void)
 }
 
 
-
-
+/**
+ * getusercommand - gets user command
+ * Return: string
+ */
 char *getusercommand(void)
 {
 	char *buf = NULL;
@@ -215,7 +249,13 @@ char *getusercommand(void)
 
 }
 
-
+/**
+ * _getline - exectutes the shell commands
+ * @str: array of strings
+ * @n:
+ * @stream:
+ * return: Always 0;
+ */
 size_t _getline(char **str, size_t *n, FILE *stream)
 {
 	char buf[1024];
@@ -243,7 +283,13 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 }
 
 
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 
 int handle_builtin_commands(char *commandarray[], char *env[])
 {
@@ -258,7 +304,13 @@ int handle_builtin_commands(char *commandarray[], char *env[])
 	return (0);
 }
 
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env[])
 {
 	int i;
@@ -280,7 +332,13 @@ int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env
 
 	return (NULL);
 }
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 int alias_command (char *commandarray[], char *env[])
 {
 	static alias_t aliases[100] = {
@@ -300,7 +358,13 @@ int alias_command (char *commandarray[], char *env[])
 		display_or_update_aliases(commandarray, aliases);
 
 }
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 void display_or_update_aliases(char *commandarray[], alias_t aliases[])
 {
 	int i;
@@ -317,7 +381,13 @@ void display_or_update_aliases(char *commandarray[], alias_t aliases[])
 		}
 	}
 }
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 int does_str_contain(char *str, char letter)
 {
 	int i;
@@ -330,7 +400,13 @@ int does_str_contain(char *str, char letter)
 
 	return (0);
 }
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 void displayaliases(alias_t aliases[])
 {
 	int i;
@@ -344,7 +420,13 @@ void displayaliases(alias_t aliases[])
 	}
 }
 
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 void updatealiases(char *str, alias_t aliases[])
 {
 	int i;
@@ -382,6 +464,13 @@ void updatealiases(char *str, alias_t aliases[])
 
 //return alias index in success
 //return -1 on failure
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 int get_alias_index(alias_t aliases[], char *name)
 {
 	int i;
@@ -395,7 +484,13 @@ int get_alias_index(alias_t aliases[], char *name)
 	return (-1);
 }
 
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 
 int exit_command(char *commandarray[], char *env[])
 {
