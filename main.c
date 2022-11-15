@@ -1,12 +1,25 @@
 #include "main.h"
-
+/**
+ * main - exectutes the shell commands
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: Always 0;
+ */
 int main(int argc, char *argv[], char *env[])
 {
 	executeshell(argc, argv, env);
 	return (0);
 }
 
-
+/**
+ * executeshell - receives commands passed to the shell
+ * and executes them
+ * @argc: argument count
+ * @argv: array of argument variables
+ * @env: environment variables
+ * return: void;
+ */
 
 void executeshell(int argc, char *argv[], char *env[])
 {
@@ -15,14 +28,21 @@ void executeshell(int argc, char *argv[], char *env[])
 
 }
 
-
+/**
+ * shell_startup_script - displays welcome message to screen
+ * return: void;
+ */
 void shell_startup_script(void)
 {
 	display_welcome_art();
 }
 
 
-
+/**
+ * display_welcome_art - reads welcome art from art.txt
+ * and displays to screen
+ * return: void;
+ */
 
 void display_welcome_art(void)
 {
