@@ -24,9 +24,9 @@ void display_welcome_art(void)
  */
 void displaycwd(void)
 {
-	char prompt[] = "$ ";
+	char prompt[] = "#cisfun$ ";
 
-	write(STDOUT_FILENO, &prompt, 2);
+	write(STDOUT_FILENO, &prompt, 9);
 }
 
 
