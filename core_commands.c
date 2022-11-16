@@ -54,6 +54,13 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
 	char *fullpath;
 	char *copyofpathvar = malloc(100);
 
+	if (stat(progname, &sfile) != -1)
+	{
+		fullpath = malloc(100);
+		_strcpy(fullpath, progname);
+		return (fullpath);
+	}
+
 	_strcpy(copyofpathvar, pathvar);
 	path = strtok(copyofpathvar, ":");
 	while (path != NULL)
