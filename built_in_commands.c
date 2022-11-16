@@ -49,7 +49,7 @@ int env_command(char *commandarray[] __attribute__((unused)), char *env[])
  * @env: environment variables
  * Return: honestly, this fn doesnt really need to return anything (my bad)
  */
-int cd_command(char *commandarray[], char *env[] __attribute__((unused)))
+int cd_command(char *commandarray[], char *env[])
 {
 	char CWD[256];
 	char *_CWD;
@@ -57,9 +57,9 @@ int cd_command(char *commandarray[], char *env[] __attribute__((unused)))
 
 	if (commandarray[1] == NULL)
 	{
-		if (chdir(_getenv("HOME")) == 0)
+		if (chdir(_getenv("HOME", env)) == 0)
 		{
-			_setenv("PWD", _getenv("HOME"), 1);
+			_setenv("PWD", _getenv("HOME", env), 1);
 			_setenv("OLDPWD", _OCWD, 1);
 			return (1);
 		}
@@ -67,7 +67,7 @@ int cd_command(char *commandarray[], char *env[] __attribute__((unused)))
 	}
 	else if (_strcmp(commandarray[1], "-") == 0)
 	{
-		_CWD = _getenv("OLDPWD");
+		_CWD = _getenv("OLDPWD", env);
 		if (chdir(_CWD) == 0)
 		{
 			_setenv("PWD", _CWD, 1);

@@ -63,7 +63,7 @@ char *_strcat(char *dest, const char *src);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_getrnv(const char *name);
 int comp_env_with_val(const char *env, const char *val);
-char *_getenv(const char *name);
+char *_getenv(const char *name, char *env[]);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
 size_t print_to_fd(int fd, char *string);

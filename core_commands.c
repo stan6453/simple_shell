@@ -85,11 +85,11 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
  */
 
 
-void execute_user_command(char *myprog, char *myargv[], char *env[] __attribute__((unused)))
+void execute_user_command(char *myprog, char *myargv[], char *env[])
 {
 	char *path_to_command;
 
-	path_to_command = resolve_path(myprog, myargv[0], _getenv("PATH"));
+	path_to_command = resolve_path(myprog, myargv[0], _getenv("PATH", env));
 	if (path_to_command == NULL)
 		return;
 	if (fork() == 0)

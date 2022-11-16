@@ -31,16 +31,15 @@ int comp_env_with_val(const char *env, const char *val)
  * Return: pointer to the value of an environment variable searched
  *         NULL if not found
  */
-char *_getenv(const char *name)
+char *_getenv(const char *name, char *env[])
 {
-	/*extern*/ char **environ = NULL;
 	int i;
 
-	for (i = 0; environ[i] != NULL; i++)
+	for (i = 0; env[i] != NULL; i++)
 	{
-		if (comp_env_with_val(environ[i], name) == 0)
+		if (comp_env_with_val(env[i], name) == 0)
 		{
-			return (environ[i] + _str_len(name) + 1);
+			return (env[i] + _str_len(name) + 1);
 		}
 	}
 	return (NULL);
