@@ -95,6 +95,7 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
 void execute_user_command(char *myprog, char *myargv[], char *env[])
 {
 	char *path_to_command;
+	int n;
 
 	path_to_command = resolve_path(myprog, myargv[0], _getenv("PATH", env));
 	if (path_to_command == NULL)
@@ -106,7 +107,7 @@ void execute_user_command(char *myprog, char *myargv[], char *env[])
 	else
 	{
 		free(path_to_command);
-		wait(NULL);
+		wait(&n);
 	}
 }
 
