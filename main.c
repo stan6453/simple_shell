@@ -33,7 +33,6 @@ void executeshell(int argc, char *argv[], char *env[])
  */
 void shell_startup_script(void)
 {
-	display_welcome_art();
 }
 
 /**
