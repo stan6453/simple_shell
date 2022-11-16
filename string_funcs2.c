@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * removecomment - unsets the value of an environment variable
  * @str: name of the environment variable to unset

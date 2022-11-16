@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * exit_command - exectutes the shell commands
  * @commandarray: argument count

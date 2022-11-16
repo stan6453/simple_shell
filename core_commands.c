@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * convert_to_argv - takes a command string at tokenizes it,
  * storing each text delimited by space in commandarray

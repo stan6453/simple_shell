@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * displayaliases - unsets the value of an environment variable
  * @aliases: name of the environment variable to unset

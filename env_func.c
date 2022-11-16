@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * comp_env_with_val - check if val matches the name of an environment variable
  * @env: string in the form "name=value"

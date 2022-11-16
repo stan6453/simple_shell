@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * display_welcome_art - reads welcome art from art.txt
  * and displays to screen
@@ -26,7 +28,10 @@ void displaycwd(void)
 
 	printf("%s$ ", getcwd(CWD, 256));
 	fflush(stdout);
-}/**
+}
+
+
+/**
  * get_fun - the nvironment variable
  * @commandarray: name of the eniable to unset
  * Return: 0 in success, -1 on error (with er

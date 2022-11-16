@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * print_to_fd - outputs a string to a file descriptor
  * @fd: file secriptor to print to

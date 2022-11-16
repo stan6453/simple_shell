@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * remove_quotes - unsets the value of an environment variable
  * @commandarray: name of the environment variable to unset
