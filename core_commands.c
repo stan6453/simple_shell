@@ -75,7 +75,9 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
 		free(fullpath);
 	}
 
-	dprintf(2, "%s: ", myprog);
+
+	print_to_stderr(myprog);
+	print_to_stderr(": ");
 	perror("");
 	return (NULL);
 }

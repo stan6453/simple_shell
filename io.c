@@ -27,7 +27,7 @@ size_t print_to_fd(int fd, char *string)
 
 size_t print_to_stdout(char *string)
 {
-	return (print_to_fd(1, string));
+	return (print_to_fd(STDOUT_FILENO, string));
 }
 
 
@@ -39,7 +39,7 @@ size_t print_to_stdout(char *string)
  */
 size_t print_to_stderr(char *string)
 {
-	return (print_to_fd(2, string));
+	return (print_to_fd(STDERR_FILENO, string));
 }
 
 
