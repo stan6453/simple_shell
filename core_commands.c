@@ -101,7 +101,7 @@ void execute_user_command(char *myprog, char *myargv[], char *env[])
 		return;
 	if (fork() == 0)
 	{
-		execve(path_to_command, myargv, NULL);
+		execve(path_to_command, myargv, env);
 	}
 	else
 	{
