@@ -12,7 +12,9 @@ int exit_command(char *commandarray[], char *env[] __attribute__((unused)))
 {
 	if (!isonlydigit(commandarray[1]))
 	{
-		dprintf(2, "Illegal number: %s\n", commandarray[1]);
+		print_to_stderr("Illegal number: ");
+		print_to_stderr(commandarray[1]);
+		print_to_stderr("\n");
 		return (1);
 	}
 	else
@@ -36,7 +38,8 @@ int env_command(char *commandarray[] __attribute__((unused)), char *env[])
 
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		print_to_stdout(env[i]);
+		print_to_stdout("\n");
 		i++;
 	}
 	return (1);
