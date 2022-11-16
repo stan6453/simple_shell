@@ -85,3 +85,21 @@ int _str_len(const char *str)
 		;
 	return (i);
 }
+
+
+
+/**
+ * delete_char_at_index - outputs a string to a file descriptor
+ * @str: file secriptor to print to
+ * @index: string to print
+ * Return: number of character written
+ */
+
+void delete_char_at_index(char *str, int index)
+{
+	while (str[index] != '\0')
+	{
+		str[index] = str[index + 1];
+		index++;
+	}
+}

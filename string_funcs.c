@@ -86,3 +86,26 @@ char *_strcat(char *dest, const char *src)
 		;
 	return (dest);
 }
+
+
+
+
+
+
+/**
+ * does_str_contain - outputs a string to a file descriptor
+ * @str: file secriptor to print to
+ * @letter: string to print
+ * Return: number of character written
+ */
+int does_str_contain(char *str, char letter)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] == letter)
+			return (1);
+	}
+	return (0);
+}
