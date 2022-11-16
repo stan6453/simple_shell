@@ -25,6 +25,7 @@ void display_welcome_art(void)
 void displaycwd(void)
 {
 	char prompt[] = "$ ";
+
 	write(STDOUT_FILENO, &prompt, 2);
 }
 

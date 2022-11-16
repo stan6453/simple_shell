@@ -71,6 +71,9 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 	else if ((size_t)num > *n)
 	{
 		*str = _realloc(*str, *n, num + 1);
+
+		if (*str == NULL)
+			return (-1);
 	}
 
 	/*might need to free previous value stord in *str*/
