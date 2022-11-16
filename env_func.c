@@ -58,7 +58,7 @@ char *_getenv(const char *name)
 
 int _setenv(const char *name, const char *value, int overwrite)
 {
-	int i, j;
+	int i;
 	/*extern*/char **environ = NULL;
 	int memsize;
 
@@ -81,6 +81,8 @@ int _setenv(const char *name, const char *value, int overwrite)
 	/*
 	 * add a new environment variable
 	 */
+
+	return(0);
 }
 
 

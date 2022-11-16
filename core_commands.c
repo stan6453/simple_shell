@@ -85,9 +85,8 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
  */
 
 
-void execute_user_command(char *myprog, char *myargv[], char *env[])
+void execute_user_command(char *myprog, char *myargv[], char *env[] __attribute__((unused)))
 {
-	struct stat sfile;
 	char *path_to_command;
 
 	path_to_command = resolve_path(myprog, myargv[0], _getenv("PATH"));

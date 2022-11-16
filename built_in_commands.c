@@ -71,7 +71,7 @@ int cd_command(char *commandarray[], char *env[] __attribute__((unused)))
 		if (chdir(_CWD) == 0)
 		{
 			_setenv("PWD", _CWD, 1);
-			-setenv("OLDPWD", _OCWD, 1);
+			_setenv("OLDPWD", _OCWD, 1);
 			return (0);
 		}
 		return (0);
