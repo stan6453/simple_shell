@@ -92,6 +92,14 @@ void eval_execute_command_loop(int argc, char *argv[], char *env[])
 	}
 }
 
+
+
+
+
+/**
+ * remove_quotes - unsets the value of an environment variable
+ * @commandarray: name of the environment variable to unset
+ */
 void remove_quotes(char *commandarray[])
 {
 	int i;
@@ -101,6 +109,13 @@ void remove_quotes(char *commandarray[])
 		remove_single_quotes(commandarray[i]);
 	}
 }
+
+
+
+/**
+ * remove_single_quotes - unsets the value of an environment variable
+ * @str: name of the environment variable to unset
+ */
 
 void remove_single_quotes(char *str)
 {
@@ -113,6 +128,14 @@ void remove_single_quotes(char *str)
 	}
 }
 
+
+
+/**
+ * delete_char_at_index - outputs a string to a file descriptor
+ * @str: file secriptor to print to
+ * @index: string to print
+ * Return: number of character written
+ */
 
 void delete_char_at_index(char *str, int index)
 {
@@ -148,6 +171,12 @@ void replace_variables(char *commandarray[])
 
 */
 
+
+
+/**
+ * removecomment - unsets the value of an environment variable
+ * @str: name of the environment variable to unset
+ */
 void removecomment(char *str)
 {
 	int i;
@@ -160,6 +189,15 @@ void removecomment(char *str)
 		}
 }
 
+
+
+ /**
+ * tokenize_string - set the value of an environment variable
+ * @command: name of env variable to set the value
+ * @commandarray: value to be set
+ * @sep: if set to true, environment variable is overwritten if it exists
+ * if set to false, the environment variable is not changed if it already exists
+ */
 
 void tokenize_string (char *command, char *commandarray[], char sep)
 {
@@ -187,7 +225,9 @@ void tokenize_string (char *command, char *commandarray[], char sep)
 }
 
 
-
+/**
+ * displaycwd - gets user command
+ */
 void displaycwd(void)
 {
 	char CWD[256];
@@ -197,7 +237,9 @@ void displaycwd(void)
 
 
 
-
+/**
+ * getusercommand - gets user command
+ */
 char *getusercommand(void)
 {
 	char *buf = NULL;
@@ -218,7 +260,14 @@ char *getusercommand(void)
 
 }
 
-
+/**
+ * _getline - set the value of an environment variable
+ * @str: name of env variable to set the value
+ * @n: value to be set
+ * @stream: if set to true, environment variable is overwritten if it exists
+ * if set to false, the environment variable is not changed if it already exists
+ * Return: 0 on seccess, -1 on failure (with errno set(not implemented yet))
+ */
 size_t _getline(char **str, size_t *n, FILE *stream)
 {
 	char buf[1024];
@@ -269,6 +318,13 @@ int handle_builtin_commands(char *commandarray[], char *env[])
 }
 
 
+
+/**
+ * get_func_to_execute - unsets the value of an environment variable
+ * @commandarray: name of the environment variable to unset
+ * Return: 0 in success, -1 on error (with errno set (not implemented yet))
+ */
+
 int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env[])
 {
 	int i;
@@ -291,6 +347,14 @@ int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env
 	return (NULL);
 }
 
+
+
+/**
+ * alias_command - outputs a string to a file descriptor
+ * @commandarray: file secriptor to print to
+ * @env: string to print
+ * Return: number of character written
+ */
 int alias_command (char *commandarray[], char *env[])
 {
 	static alias_t aliases[100] = {
@@ -311,6 +375,15 @@ int alias_command (char *commandarray[], char *env[])
 
 }
 
+
+
+/**
+ * display_or_update_aliases - outputs a string to a file descriptor
+ * @commandarray: file secriptor to print to
+ * @aliases: string to print
+ * Return: number of character written
+ */
+
 void display_or_update_aliases(char *commandarray[], alias_t aliases[])
 {
 	int i;
@@ -328,6 +401,14 @@ void display_or_update_aliases(char *commandarray[], alias_t aliases[])
 	}
 }
 
+
+
+/**
+ * does_str_contain - outputs a string to a file descriptor
+ * @str: file secriptor to print to
+ * @letter: string to print
+ * Return: number of character written
+ */
 int does_str_contain(char *str, char letter)
 {
 	int i;
@@ -340,6 +421,13 @@ int does_str_contain(char *str, char letter)
 	return (0);
 }
 
+
+
+/**
+ * displayaliases - unsets the value of an environment variable
+ * @aliases: name of the environment variable to unset
+ * Return: 0 in success, -1 on error (with errno set (not implemented yet))
+ */
 void displayaliases(alias_t aliases[])
 {
 	int i;
@@ -354,6 +442,13 @@ void displayaliases(alias_t aliases[])
 }
 
 
+
+/**
+ * updatealiases - unsets the value of an environment variable
+ * @str: name of the environment variable to unset
+ * @aliases: whatever
+ * Return: 0 in success, -1 on error (with errno set (not implemented yet))
+ */
 void updatealiases(char *str, alias_t aliases[])
 {
 	int i;
@@ -388,8 +483,11 @@ void updatealiases(char *str, alias_t aliases[])
 
 }
 
-//return alias index in success
-//return -1 on failure
+
+
+
+
+
 int get_alias_index(alias_t aliases[], char *name)
 {
 	int i;
@@ -714,6 +812,13 @@ int _setenv(const char *name, const char *value, int overwrite)
 }
 
 
+
+
+/**
+ * _unsetenv - unsets the value of an environment variable
+ * @name: name of the environment variable to unset
+ * Return: 0 in success, -1 on error (with errno set (not implemented yet))
+ */
 int _unsetenv(const char *name)
 {
 	extern char **environ;
@@ -736,6 +841,15 @@ int _unsetenv(const char *name)
 	return (0);
 }
 
+
+
+
+/**
+ * print_to_fd - outputs a string to a file descriptor
+ * @fd: file secriptor to print to
+ * @string: string to print
+ * Return: number of character written
+ */
 size_t print_to_fd(int fd, char *string){
 	size_t i;
 
@@ -747,11 +861,25 @@ size_t print_to_fd(int fd, char *string){
 }
 
 
+
+/**
+ * print_to_stdout - outputs a string to standard output
+ * @string: string to print
+ * Return: number of character written
+ */
+
 size_t print_to_stdout(char *string)
 {
 	return (print_to_fd(1, string));
 }
 
+
+
+/**
+ * print_to_stderr - outputs a string to standard error
+ * @string: string to print
+ * Return: number of character written
+ */
 size_t print_to_stderr(char *string)
 {
 	return (print_to_fd(2, string));
