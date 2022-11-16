@@ -50,12 +50,13 @@ void display_welcome_art(void)
 	int n;
 
 	while ((n = read(fd, buf, 1020)) != 0)
-			write(1, buf, n);
+		write(1, buf, n);
 	printf("\n");
 }
 
 /**
- * eval_execute_command_loop - continuously asks user for command and executes it
+ * eval_execute_command_loop - continuously asks
+ * user for command and executes it
  * @argc: argument count when shell was opened
  * @argv: arguments passed to shell when it was opened
  * @env: environment variables of shell
@@ -67,7 +68,7 @@ void eval_execute_command_loop(int argc, char *argv[], char *env[])
 	char *commandsep[10];
 	int i;
 
-	while(1)
+	while (1)
 	{
 		displaycwd();
 		usercommand = getusercommand();
@@ -146,32 +147,6 @@ void delete_char_at_index(char *str, int index)
 	}
 }
 
-/*
-void replace_variables(char *commandarray[])
-{
-	int i;
-
-	for (i = 1; commandarray[i] != NULL; i++)
-	{
-		if (commandarray[i][0] == '$' && commandarray[i][1] != '\n')
-		{
-			switch(commandarray[i][1])
-			{
-				case '?':
-					return;
-				case '$':
-					_strcpy(commandarray[i], num_to_string(getpid()));
-					return;
-				default:
-					return;
-			}
-		}
-	}
-}
-
-*/
-
-
 
 /**
  * removecomment - unsets the value of an environment variable
@@ -191,15 +166,13 @@ void removecomment(char *str)
 
 
 
- /**
+/**
  * tokenize_string - set the value of an environment variable
  * @command: name of env variable to set the value
  * @commandarray: value to be set
- * @sep: if set to true, environment variable is overwritten if it exists
- * if set to false, the environment variable is not changed if it already exists
+ * @sep: if set to true, environment variable is overwri
  */
-
-void tokenize_string (char *command, char *commandarray[], char sep)
+void tokenize_string(char *command, char *commandarray[], char sep)
 {
 	int i;
 	int count_ca = 0;
@@ -231,6 +204,7 @@ void tokenize_string (char *command, char *commandarray[], char sep)
 void displaycwd(void)
 {
 	char CWD[256];
+
 	printf("%s$ ", getcwd(CWD, 256));
 	fflush(stdout);
 }
@@ -239,6 +213,7 @@ void displaycwd(void)
 
 /**
  * getusercommand - gets user command
+ * Return: string
  */
 char *getusercommand(void)
 {
@@ -256,7 +231,7 @@ char *getusercommand(void)
 	if (buf[numchar - 1] == '\n')
 		buf[numchar - 1] = '\0';
 
-	return buf;
+	return (buf);
 
 }
 
@@ -264,9 +239,8 @@ char *getusercommand(void)
  * _getline - set the value of an environment variable
  * @str: name of env variable to set the value
  * @n: value to be set
- * @stream: if set to true, environment variable is overwritten if it exists
- * if set to false, the environment variable is not changed if it already exists
- * Return: 0 on seccess, -1 on failure (with errno set(not implemented yet))
+ * @stream: if set to true, environment variabl
+ * Return: 0 on seccess, -1 on failure (with err
  */
 size_t _getline(char **str, size_t *n, FILE *stream)
 {
@@ -292,22 +266,20 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 	_strcpy(*str, buf);
 	(*str)[num] = '\0';
 	*n = num;
-	return num;
+	return (num);
 }
 
 
 /**
- * main - exectutes the shell commands
- * @argc: argument count
- * @argv: array of argument variables
+ * handle_builtin_commands - exectutes the shell commands
+ * @commandarray: argument count
  * @env: environment variables
- * return: Always 0;
+ * Return: Always 0;
  */
-
-
 int handle_builtin_commands(char *commandarray[], char *env[])
 {
 	int (*func)(char **, char **);
+
 	func = get_func_to_execute(commandarray);
 	if (func != NULL)
 	{
@@ -320,17 +292,17 @@ int handle_builtin_commands(char *commandarray[], char *env[])
 
 
 /**
- * get_func_to_execute - unsets the value of an environment variable
- * @commandarray: name of the environment variable to unset
- * Return: 0 in success, -1 on error (with errno set (not implemented yet))
+ * get_func_to_execute - the nvironment variable
+ * @commandarray: name of the eniable to unset
+ * Return: 0 in success, -1 on error (with er
  */
 
-int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env[])
+int (*get_func_to_execute(char *commandarray[]))
+	(char *commandarray[], char *env[])
 {
 	int i;
 
-	command_object array[] =
-	{
+	command_object array[] = {
 		{"exit", exit_command},
 		{"env", env_command},
 		{"cd", cd_command},
@@ -338,7 +310,7 @@ int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env
 		{NULL, NULL}
 	};
 
-	for (i = 0; array[i].command_name != NULL; i++ )
+	for (i = 0; array[i].command_name != NULL; i++)
 	{
 		if (_strcmp(array[i].command_name, commandarray[0]) == 0)
 			return (array[i].func);
@@ -355,7 +327,7 @@ int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char *env
  * @env: string to print
  * Return: number of character written
  */
-int alias_command (char *commandarray[], char *env[])
+int alias_command(char *commandarray[], char *env[])
 {
 	static alias_t aliases[100] = {
 		{"love", "love command"},
@@ -390,13 +362,13 @@ void display_or_update_aliases(char *commandarray[], alias_t aliases[])
 
 	for (i = 1; commandarray[i] != NULL; i++)
 	{
-		if(does_str_contain(commandarray[i], '='))
+		if (does_str_contain(commandarray[i], '='))
 		{
 			updatealiases(commandarray[i], aliases);
 		}
 		else
 		{
-			//display this alias
+			/*display this alias*/
 		}
 	}
 }
@@ -463,7 +435,7 @@ void updatealiases(char *str, alias_t aliases[])
 
 	index = get_alias_index(aliases, cnr[0]);
 
-	if (index >=0)
+	if (index >= 0)
 	{
 		free(aliases[index].replacement);
 		aliases[index].replacement = malloc(_str_len(cnr[1]) + 1);
@@ -485,8 +457,12 @@ void updatealiases(char *str, alias_t aliases[])
 
 
 
-
-
+/**
+ * get_alias_index - exectutes the shell commands
+ * @aliases: argument count
+ * @name: array of argument variables
+ * return: Always 0;
+ */
 
 int get_alias_index(alias_t aliases[], char *name)
 {
@@ -502,9 +478,8 @@ int get_alias_index(alias_t aliases[], char *name)
 }
 
 /**
- * main - exectutes the shell commands
- * @argc: argument count
- * @argv: array of argument variables
+ * exit_command - exectutes the shell commands
+ * @commandarray: argument count
  * @env: environment variables
  * return: Always 0;
  */
@@ -543,7 +518,7 @@ int isonlydigit(char *s)
 
 
 /**
- * alias_command - fn that runs when the env comamnd is executed
+ * env_command - fn that runs when the env comamnd is executed
  * @commandarray: array containing the name of the command and its options
  * @env: environment variables
  * Return: honestly, this fn doesnt really need to return anything (my bad)
@@ -562,7 +537,7 @@ int env_command(char *commandarray[], char *env[])
 
 
 /**
- * alias_command - fn that runs when the cd comamnd is executed
+ * cd_command - fn that runs when the cd comamnd is executed
  * @commandarray: array containing the name of the command and its options
  * @env: environment variables
  * Return: honestly, this fn doesnt really need to return anything (my bad)
@@ -639,7 +614,7 @@ void execute_user_command(char *myprog, char *myargv[], char *env[])
  * convert_to_argv - takes a command string at tokenizes it,
  * storing each text delimited by space in commandarray
  * @command: string to get commandarray from
- * @commandarray: array of char pointers to text in command, separated by space character
+ * @commandarray: array of char ped by space character
  */
 
 void convert_to_argv(char *command, char *commandarray[])
@@ -651,7 +626,7 @@ void convert_to_argv(char *command, char *commandarray[])
 
 	for (i = 0; command[i] != '\0'; i++)
 	{
-		if (command[i] == '\'' && pt == 0 )
+		if (command[i] == '\'' && pt == 0)
 			pt = 1;
 		else if (command[i] == '\'' && pt == 1)
 			pt = 0;
@@ -679,6 +654,7 @@ void convert_to_argv(char *command, char *commandarray[])
  * @myprog: name of my shell
  * @progname: name of the command to execute
  * @pathvar: a pointer to the path environment variable
+ * Return: nothing
  */
 
 char *resolve_path(char *myprog, char *progname, char *pathvar)
@@ -690,20 +666,21 @@ char *resolve_path(char *myprog, char *progname, char *pathvar)
 
 	_strcpy(copyofpathvar, pathvar);
 	path = strtok(copyofpathvar, ":");
-	while(path != NULL){
+	while (path != NULL)
+	{
 		fullpath = malloc(100);
 		_strcpy(fullpath, path);
 		_strcat(fullpath, "/");
 		_strcat(fullpath, progname);
-		if(stat(fullpath, &sfile) != -1)
-			return fullpath;
+		if (stat(fullpath, &sfile) != -1)
+			return (fullpath);
 		path = strtok(NULL, ":");
 		free(fullpath);
 	}
 
 	dprintf(2, "%s: ", myprog);
 	perror("");
-	return NULL;
+	return (NULL);
 }
 
 
@@ -739,13 +716,14 @@ int comp_env_with_val(const char *env, const char *val)
 {
 	int i;
 
-	for (i = 0; ; i++){
-		if(env[i] != val[i])
+	for (i = 0; ; i++)
+	{
+		if (env[i] != val[i])
 		{
 			if (env[i] == '=' && val[i] == '\0')
 				return (0);
 			else
-				return(1);
+				return (1);
 		}
 	}
 }
@@ -760,7 +738,7 @@ int comp_env_with_val(const char *env, const char *val)
  */
 char *_getenv(const char *name)
 {
-	extern char **environ;
+	/*extern char **environ;*/
 	int i;
 
 	for (i = 0; environ[i] != NULL; i++)
@@ -779,15 +757,14 @@ char *_getenv(const char *name)
  * _setenv - set the value of an environment variable
  * @name: name of env variable to set the value
  * @value: value to be set
- * @overwrite: if set to true, environment variable is overwritten if it exists
- * if set to false, the environment variable is not changed if it already exists
- * Return: 0 on success, -1 on failure (with errno set(not implemented yet))
+ * @overwrite: if set to true, environment variable
+ * Return: 0 on success, -1 on failure (with errno
  */
 
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	int i, j;
-	extern char **environ;
+	/*extern char **environ;*/
 	int memsize;
 
 	for (i = 0; environ[i] != NULL; i++)
@@ -821,7 +798,7 @@ int _setenv(const char *name, const char *value, int overwrite)
  */
 int _unsetenv(const char *name)
 {
-	extern char **environ;
+	/*extern char **environ;*/
 	int i;
 
 	for (i = 0; environ[i] != NULL; i++)
@@ -850,7 +827,8 @@ int _unsetenv(const char *name)
  * @string: string to print
  * Return: number of character written
  */
-size_t print_to_fd(int fd, char *string){
+size_t print_to_fd(int fd, char *string)
+{
 	size_t i;
 
 	for (i = 0; string[i] != '\0'; i++)
