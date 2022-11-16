@@ -39,3 +39,41 @@ size_t print_to_stderr(char *string)
 {
 	return (print_to_fd(2, string));
 }
+
+
+
+
+
+/**
+ * _getline - set the value of an environment variable
+ * @str: name of env variable to set the value
+ * @n: value to be set
+ * @stream: if set to true, environment variabl
+ * Return: 0 on seccess, -1 on failure (with err
+ */
+size_t _getline(char **str, size_t *n, FILE *stream)
+{
+	char buf[1024];
+	size_t num;
+
+	num = read(stream->_fileno, buf, 1024);
+
+	if (num == 0)
+	{
+		return (0);
+	}
+	else if (num < 0)
+	{
+		return (-1);
+	}
+	else if (num > *n)
+	{
+		*str = _realloc(*str, *n, num + 1);
+	}
+
+	/*might need to free previous value stord in *str*/
+	_strcpy(*str, buf);
+	(*str)[num] = '\0';
+	*n = num;
+	return (num);
+}

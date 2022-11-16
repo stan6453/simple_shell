@@ -125,3 +125,26 @@ int handle_builtin_commands(char *commandarray[], char *env[])
 
 
 
+/**
+ * getusercommand - gets user command
+ * Return: string
+ */
+char *getusercommand(void)
+{
+	char *buf = NULL;
+	size_t bufsize = 0;
+	size_t numchar;
+
+	numchar = _getline(&buf, &bufsize, stdin);
+
+	if (numchar == 0)
+	{
+		exit(-1);
+	}
+
+	if (buf[numchar - 1] == '\n')
+		buf[numchar - 1] = '\0';
+
+	return (buf);
+
+}
