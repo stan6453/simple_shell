@@ -56,7 +56,7 @@ size_t print_to_stderr(char *string)
 size_t _getline(char **str, size_t *n, FILE *stream)
 {
 	char buf[1024];
-	size_t num;
+	int num;
 
 	num = read(stream->_fileno, buf, 1024);
 
@@ -68,7 +68,7 @@ size_t _getline(char **str, size_t *n, FILE *stream)
 	{
 		return (-1);
 	}
-	else if (num > *n)
+	else if ((size_t)num > *n)
 	{
 		*str = _realloc(*str, *n, num + 1);
 	}

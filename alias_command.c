@@ -119,7 +119,7 @@ void display_or_update_aliases(char *commandarray[], alias_t aliases[])
  * @env: string to print
  * Return: number of character written
  */
-int alias_command(char *commandarray[], char *env[])
+int alias_command(char *commandarray[], char *env[] __attribute__((unused)))
 {
 	static alias_t aliases[100] = {
 		{"love", "love command"},
@@ -136,5 +136,7 @@ int alias_command(char *commandarray[], char *env[])
 
 	if (i > 1)
 		display_or_update_aliases(commandarray, aliases);
+
+	return (0);
 
 }

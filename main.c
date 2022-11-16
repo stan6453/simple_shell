@@ -43,7 +43,7 @@ void shell_startup_script(void)
  * @argv: arguments passed to shell when it was opened
  * @env: environment variables of shell
  */
-void eval_execute_command_loop(int argc, char *argv[], char *env[])
+void eval_execute_command_loop(int argc __attribute__((unused)), char *argv[], char *env[])
 {
 	char *usercommand;
 	char *commandarray[10];

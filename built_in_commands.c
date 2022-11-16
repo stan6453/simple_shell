@@ -8,7 +8,7 @@
  */
 
 
-int exit_command(char *commandarray[], char *env[])
+int exit_command(char *commandarray[], char *env[] __attribute__((unused)))
 {
 	if (!isonlydigit(commandarray[1]))
 	{
@@ -30,7 +30,7 @@ int exit_command(char *commandarray[], char *env[])
  * @env: environment variables
  * Return: honestly, this fn doesnt really need to return anything (my bad)
  */
-int env_command(char *commandarray[], char *env[])
+int env_command(char *commandarray[] __attribute__((unused)), char *env[])
 {
 	int i = 0;
 
@@ -49,7 +49,7 @@ int env_command(char *commandarray[], char *env[])
  * @env: environment variables
  * Return: honestly, this fn doesnt really need to return anything (my bad)
  */
-int cd_command(char *commandarray[], char *env[])
+int cd_command(char *commandarray[], char *env[] __attribute__((unused)))
 {
 	char CWD[256];
 	char *_CWD;

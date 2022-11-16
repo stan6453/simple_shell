@@ -33,7 +33,7 @@ int comp_env_with_val(const char *env, const char *val)
  */
 char *_getenv(const char *name)
 {
-	/*extern char **environ;*/
+	/*extern*/ char **environ = NULL;
 	int i;
 
 	for (i = 0; environ[i] != NULL; i++)
@@ -59,7 +59,7 @@ char *_getenv(const char *name)
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	int i, j;
-	/*extern char **environ;*/
+	/*extern*/char **environ = NULL;
 	int memsize;
 
 	for (i = 0; environ[i] != NULL; i++)
@@ -93,7 +93,7 @@ int _setenv(const char *name, const char *value, int overwrite)
  */
 int _unsetenv(const char *name)
 {
-	/*extern char **environ;*/
+	/*extern*/ char **environ = NULL;
 	int i;
 
 	for (i = 0; environ[i] != NULL; i++)
