@@ -24,10 +24,8 @@ void display_welcome_art(void)
  */
 void displaycwd(void)
 {
-	char CWD[256];
-
-	printf("%s$ ", getcwd(CWD, 256));
-	fflush(stdout);
+	char prompt[] = "$ ";
+	write(STDOUT_FILENO, &prompt, 2);
 }
 
 
