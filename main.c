@@ -20,7 +20,7 @@ int main(int argc, char *argv[], char *env[])
  * Return: void;
  */
 
-void executeshell(int argc, char *argv[], char *env[])
+void executeshell(int argc __attribute__((unused)), char *argv[], char *env[])
 {
 	shell_startup_script();
 	eval_execute_command_loop(argv, env);
