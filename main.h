@@ -42,7 +42,7 @@ typedef struct alias_obj
 void executeshell(int, char **, char **);
 void shell_startup_script(void);
 void display_welcome_art(void);
-void eval_execute_command_loop(int, char **, char **);
+void eval_execute_command_loop(char **, char **);
 void displaycwd(void);
 char *getusercommand(void);
 void removecomment(char *);

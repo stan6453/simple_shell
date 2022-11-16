@@ -23,7 +23,7 @@ int main(int argc, char *argv[], char *env[])
 void executeshell(int argc, char *argv[], char *env[])
 {
 	shell_startup_script();
-	eval_execute_command_loop(argc, argv, env);
+	eval_execute_command_loop(argv, env);
 
 }
 
@@ -38,11 +38,10 @@ void shell_startup_script(void)
 /**
  * eval_execute_command_loop - continuously asks
  * user for command and executes it
- * @argc: argument count when shell was opened
  * @argv: arguments passed to shell when it was opened
  * @env: environment variables of shell
  */
-void eval_execute_command_loop(int argc __attribute__((unused)), char *argv[], char *env[])
+void eval_execute_command_loop(char *argv[], char *env[])
 {
 	char *usercommand;
 	char *commandarray[10];

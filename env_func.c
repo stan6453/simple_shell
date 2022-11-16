@@ -28,6 +28,7 @@ int comp_env_with_val(const char *env, const char *val)
 /**
  * _getenv - return a pointer to the value of an environment variable
  * @name: name of the environment variable to search for its value
+ * @env: environment variable
  * Return: pointer to the value of an environment variable searched
  *         NULL if not found
  */
@@ -58,7 +59,8 @@ char *_getenv(const char *name, char *env[])
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	int i;
-	/*extern*/char **environ = NULL;
+	/*extern*/
+	char **environ = NULL;
 	int memsize;
 
 	for (i = 0; environ[i] != NULL; i++)
@@ -81,7 +83,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 	 * add a new environment variable
 	 */
 
-	return(0);
+	return (0);
 }
 
 
@@ -94,7 +96,8 @@ int _setenv(const char *name, const char *value, int overwrite)
  */
 int _unsetenv(const char *name)
 {
-	/*extern*/ char **environ = NULL;
+	/*extern*/
+	char **environ = NULL;
 	int i;
 
 	for (i = 0; environ[i] != NULL; i++)
