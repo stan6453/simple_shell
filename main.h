@@ -11,14 +11,28 @@
 #include <fcntl.h>
 
 
-
-typedef struct b_cmd {
+/**
+ * struct b_cmd - Short description
+ * @command_name: First member
+ * @func: Second member
+ *
+ * Description: Longer description
+ */
+typedef struct b_cmd
+{
 	char *command_name;
 	int (*func)(char **, char **);
 } command_object;
 
-
-typedef struct alias_obj{
+/**
+ * struct alias_obj - Short description
+ * @command: First member
+ * @replacement: Second member
+ *
+ * Description: Longer description
+ */
+typedef struct alias_obj
+{
 	char *command;
 	char *replacement;
 } alias_t;
@@ -35,7 +49,7 @@ void removecomment(char *);
 void tokenize_string(char *command, char *commandarray[], char sep);
 size_t _getline(char **str, size_t *n, FILE *stream);
 int handle_builtin_commands(char **, char **);
-int (*get_func_to_execute(char *commandarray[]))(char *commandarray[], char **);
+int (*get_fun(char *commandarray[]))(char *commandarray[], char **);
 void execute_user_command(char *, char **, char **);
 void convert_to_argv(char *, char **);
 void printarr(char *arr[]);

@@ -280,7 +280,7 @@ int handle_builtin_commands(char *commandarray[], char *env[])
 {
 	int (*func)(char **, char **);
 
-	func = get_func_to_execute(commandarray);
+	func = get_fun(commandarray);
 	if (func != NULL)
 	{
 		func(commandarray, env);
@@ -292,13 +292,12 @@ int handle_builtin_commands(char *commandarray[], char *env[])
 
 
 /**
- * get_func_to_execute - the nvironment variable
+ * get_fun - the nvironment variable
  * @commandarray: name of the eniable to unset
  * Return: 0 in success, -1 on error (with er
  */
 
-int (*get_func_to_execute(char *commandarray[]))
-	(char *commandarray[], char *env[])
+int (*get_fun(char *commandarray[]))(char *commandarray[], char *env[])
 {
 	int i;
 
@@ -461,7 +460,7 @@ void updatealiases(char *str, alias_t aliases[])
  * get_alias_index - exectutes the shell commands
  * @aliases: argument count
  * @name: array of argument variables
- * return: Always 0;
+ * Return: Always 0;
  */
 
 int get_alias_index(alias_t aliases[], char *name)
@@ -481,7 +480,7 @@ int get_alias_index(alias_t aliases[], char *name)
  * exit_command - exectutes the shell commands
  * @commandarray: argument count
  * @env: environment variables
- * return: Always 0;
+ * Return: Always 0;
  */
 
 
